@@ -21,62 +21,53 @@ def countFijas(lsOrig, lsUsua):
 	
 	return conteo
 
-def GenerarLista():
+def GenerarLista(tam):
 	lista = []
 
-	while len(lista) < 3:
-		num = randint(0,9)
+	while len(lista) < tam:
+		num = randint(0,10)
 
 		if not num in lista:
 			lista.append(num)
 
 	return lista
 
-listaOrig = GenerarLista()
+listaOrig = GenerarLista(3)
 print listaOrig
 
-def valCadena(cadena):
+#FUNCIÓN RECURSIVA QUE EXIGE AL USUARIO QUE LA CADENA SEA
+#DE 3 DIGITOS, DE LO CONTRARIO LA VA A PEDIR UNA Y OTRA VEZ
+def valCadena():
+	lStIngr = raw_input("Ingrese una cifra de tres digitos: ")
 	
-
-a=raw_input("Prueba tu suerte, ingresa un valor de no mas de tres caracteres: ")
-listaUsua = [int(x) for x in list(a)]
-
-print "fijas " + str(countFijas(listaOrig, listaUsua))
-print "picas " + str(countPicas(listaOrig, listaUsua))
+	if len(lStIngr) <> 3:
+		print "No ha ingresado una cadena de 3 digitos"
+		return valCadena()
+	
+	return lStIngr
 
 for i in range(5):
-	a=raw_input("Prueba tu suerte, ingresa un valor de no mas de tres caracteres: ")
-	
-	if len(a) <> 3:
-		print "La longitud maxima de la cadena es de tres digitos"
-		break
+	lStCifra = valCadena()
 		
 	indice = 0
 	picas = 0
 	fijas = 0
 
-	for lt in range(len(a)):
-		if lista[lt]==int(a[lt]):
-			fijas += 1
-		elif int(a[lt]) in lista:
-			picas += 1
-	#for letra in a:
-	#	if lista[indice]==int(letra):
-	#		fijas += 1
-	#	elif int(letra) in lista:
-	#		picas += 1
-	#       indice += 1
-
-	##while indice < len(a):
-                #if lista[indice]==int(a[indice]):
-		#	fijas += 1
-		#elif int(a[indice]) in lista:
-		#	picas += 1
-		
+	digito = [int(x) for x in list(lStCifra)]		
 	
-	if fijas == len(a):
-		print "Felicidades, has obtenido todas las fijas"
-		break
-	else:
-		print "Obtuviste " + str(fijas) + " fijas y " + str(picas) + " picas"
-"""
+	picas = countPicas(listaOrig, digito)
+	fijas = countFijas(listaOrig, digito)
+	
+	gLsIntentos.append([lStCifra, "Picas: " + str(picas), "Fijas: " + str(fijas)])
+
+for iMatriz in gLsIntentos:
+	lStResumen = "Con el valor: "
+	for iLista in range(len(iMatriz)):		
+		lStResumen = lStResumen + str(iMatriz[iLista])
+		
+		if iLista == 0:
+			lStResumen = lStResumen + ", usted obtuvo:"
+		
+		lStResumen = lStResumen + " "
+	
+	print lStResumen
